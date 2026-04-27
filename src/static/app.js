@@ -19,12 +19,27 @@ document.addEventListener("DOMContentLoaded", () => {
         activityCard.className = "activity-card";
 
         const spotsLeft = details.max_participants - details.participants.length;
+        const participantsHtml = details.participants.length
+          ? `
+            <div class="participants">
+              <p><strong>Participants:</strong></p>
+              <ul class="participants-list">
+                ${details.participants.map((email) => `<li>${email}</li>`).join("")}
+              </ul>
+            </div>
+          `
+          : `
+            <div class="participants">
+              <p><strong>Participants:</strong> <span class="no-participants">None yet</span></p>
+            </div>
+          `;
 
         activityCard.innerHTML = `
           <h4>${name}</h4>
           <p>${details.description}</p>
           <p><strong>Schedule:</strong> ${details.schedule}</p>
           <p><strong>Availability:</strong> ${spotsLeft} spots left</p>
+          ${participantsHtml}
         `;
 
         activitiesList.appendChild(activityCard);
@@ -81,6 +96,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // Initialize app
-  fetchActivities();
+// Initialize app
+fetchActivities();
 });
